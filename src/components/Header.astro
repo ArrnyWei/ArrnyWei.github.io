@@ -1,0 +1,74 @@
+---
+import { site } from '../data/site';
+---
+
+<header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-ink-100">
+  <div class="container-content flex items-center justify-between h-16 md:h-20">
+    <a href="/" class="flex items-center gap-2 text-ink-900">
+      <span class="font-bold text-xl md:text-2xl text-primary-600 tracking-wider lowercase">origi</span>
+      <span class="hidden sm:inline text-sm text-ink-500">歐力吉</span>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-7">
+      {site.nav.map((item) => (
+        <a
+          href={item.href}
+          class="text-sm text-ink-700 hover:text-primary-700 transition-colors"
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <a
+      href={`mailto:${site.email}`}
+      class="hidden lg:inline-flex btn-primary text-sm py-2 px-4"
+    >
+      立即洽詢
+    </a>
+
+    <button
+      id="mobile-menu-toggle"
+      class="lg:hidden p-2 -mr-2 text-ink-800"
+      aria-label="開啟選單"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="lg:hidden hidden border-t border-ink-100 bg-white">
+    <nav class="container-content py-4 flex flex-col gap-3">
+      {site.nav.map((item) => (
+        <a
+          href={item.href}
+          class="py-2 text-ink-700 hover:text-primary-700"
+          data-menu-link
+        >
+          {item.label}
+        </a>
+      ))}
+      <a
+        href={`mailto:${site.email}`}
+        class="btn-primary text-sm py-2 mt-2"
+      >
+        立即洽詢
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  toggle?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('hidden');
+    toggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+  });
+  menu?.querySelectorAll('[data-menu-link]').forEach((el) => {
+    el.addEventListener('click', () => menu.classList.add('hidden'));
+  });
+</script>

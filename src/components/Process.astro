@@ -1,0 +1,40 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { site } from '../data/site';
+---
+
+<section id="process" class="section bg-ink-50/60 border-y border-ink-100">
+  <div class="container-content">
+    <SectionHeading
+      eyebrow="Process"
+      title="專案服務流程"
+      description="2015 年建置完成的 SOP，從接洽、簽約、執行到驗收，每一階段都有清楚的交付與回饋節點。"
+    />
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      {site.process.map((p, i) => (
+        <div class="relative bg-white border border-ink-100 rounded-sm p-6 hover:border-primary-400 transition-colors">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="flex items-center justify-center w-9 h-9 rounded-full bg-primary-600 text-white text-sm font-bold">
+              {i + 1}
+            </span>
+            <h3 class="text-lg font-bold text-ink-900">{p.stage}</h3>
+          </div>
+          <ul class="space-y-2">
+            {p.steps.map((step) => (
+              <li class="flex items-start gap-2 text-sm text-ink-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-0.5 text-primary-500 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+                <span>{step}</span>
+              </li>
+            ))}
+          </ul>
+          {i < site.process.length - 1 && (
+            <div class="hidden lg:block absolute top-1/2 -right-3 -translate-y-1/2 text-ink-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

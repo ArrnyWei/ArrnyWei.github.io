@@ -1,0 +1,45 @@
+---
+import { site } from '../data/site';
+---
+
+<section class="relative overflow-hidden bg-ink-900 text-white">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute -top-24 -right-24 w-[28rem] h-[28rem] rounded-full bg-primary-500/20 blur-3xl"></div>
+    <div class="absolute bottom-0 -left-24 w-96 h-96 rounded-full bg-accent/20 blur-3xl"></div>
+    <div class="absolute inset-0 opacity-[0.04]" style="background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px); background-size: 48px 48px;"></div>
+  </div>
+
+  <div class="container-content relative py-24 md:py-36 lg:py-44">
+    <div class="max-w-3xl">
+      <div class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.3em] uppercase text-primary-300 mb-6">
+        <span class="w-8 h-px bg-primary-400"></span>
+        Since 1992 · ORIGI
+      </div>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.15]">
+        網站．APP．系統開發<br/>
+        <span class="text-primary-300">一條龍的數位夥伴</span>
+      </h1>
+      <p class="mt-6 text-lg text-ink-200 leading-relaxed max-w-2xl">
+        自 1992 年深耕科技產業，累積 <strong class="text-white">700+ 合作企業</strong>、<strong class="text-white">70+ APP 開發</strong>實績。從需求訪談、Prototype、開發到上線維運，我們陪伴客戶完成每一個里程碑。
+      </p>
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a href="#contact" class="btn-accent">
+          立即洽詢專案
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+        <a href="#portfolio" class="btn border border-white/30 text-white hover:bg-white/10">
+          瀏覽作品實績
+        </a>
+      </div>
+
+      <div class="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl border-t border-white/10 pt-10">
+        {site.stats.map((s) => (
+          <div>
+            <div class="text-3xl md:text-4xl font-bold text-white">{s.value}</div>
+            <div class="mt-1 text-xs tracking-widest uppercase text-ink-300">{s.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

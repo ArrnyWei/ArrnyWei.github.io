@@ -1,0 +1,93 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { site } from '../data/site';
+const telHref = `tel:${site.tel.replace(/[^0-9+]/g, '')}`;
+const mapQuery = encodeURIComponent(site.address);
+---
+
+<section id="contact" class="section bg-ink-900 text-white relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-primary-500/10 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-accent/10 blur-3xl"></div>
+  </div>
+
+  <div class="container-content relative">
+    <SectionHeading
+      eyebrow="Contact"
+      title="聊聊您的專案"
+      description="無論是網站、APP 或系統開發，歡迎來信或來電討論，我們會在 1–2 個工作日內回覆。"
+      theme="dark"
+    />
+
+    <div class="grid lg:grid-cols-2 gap-8 lg:gap-12">
+      <div class="space-y-4">
+        <a
+          href={`mailto:${site.email}`}
+          class="flex items-start gap-4 p-6 bg-white/5 border border-white/10 rounded-sm hover:bg-white/10 transition-colors"
+        >
+          <div class="shrink-0 w-11 h-11 rounded-sm bg-primary-500/20 text-primary-300 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </div>
+          <div>
+            <div class="text-xs text-ink-300 uppercase tracking-widest">Email</div>
+            <div class="mt-1 text-lg font-medium break-all">{site.email}</div>
+            <div class="mt-1 text-sm text-ink-300">點擊直接開啟郵件 App</div>
+          </div>
+        </a>
+
+        <a
+          href={telHref}
+          class="flex items-start gap-4 p-6 bg-white/5 border border-white/10 rounded-sm hover:bg-white/10 transition-colors"
+        >
+          <div class="shrink-0 w-11 h-11 rounded-sm bg-primary-500/20 text-primary-300 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h2l2 5-3 1.5a11 11 0 005 5l1.5-3 5 2v2a2 2 0 01-2 2h-1C9.4 17.5 6.5 14.6 6.5 11V10A2 2 0 013 5z"/></svg>
+          </div>
+          <div>
+            <div class="text-xs text-ink-300 uppercase tracking-widest">Phone</div>
+            <div class="mt-1 text-lg font-medium">{site.tel}</div>
+            <div class="mt-1 text-sm text-ink-300">{site.businessHours}</div>
+          </div>
+        </a>
+
+        <div class="flex items-start gap-4 p-6 bg-white/5 border border-white/10 rounded-sm">
+          <div class="shrink-0 w-11 h-11 rounded-sm bg-primary-500/20 text-primary-300 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <div>
+            <div class="text-xs text-ink-300 uppercase tracking-widest">Address</div>
+            <div class="mt-1 text-lg font-medium">{site.address}</div>
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`}
+              target="_blank"
+              rel="noopener"
+              class="mt-2 inline-flex items-center gap-1 text-sm text-accent-light hover:text-white"
+            >
+              於 Google 地圖開啟
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white/5 border border-white/10 rounded-sm p-8 lg:p-10">
+        <h3 class="text-xl font-bold mb-4">開始專案討論</h3>
+        <p class="text-ink-200 leading-relaxed mb-6">
+          請在信中提供以下資訊，能幫助我們更快回覆合適的方案：
+        </p>
+        <ul class="space-y-3 text-sm text-ink-100 mb-8">
+          <li class="flex gap-2"><span class="text-primary-300">•</span>專案類型（網站／APP／系統／IoT／其他）</li>
+          <li class="flex gap-2"><span class="text-primary-300">•</span>主要需求與目標使用對象</li>
+          <li class="flex gap-2"><span class="text-primary-300">•</span>預期上線時程</li>
+          <li class="flex gap-2"><span class="text-primary-300">•</span>預算範圍（如有）</li>
+          <li class="flex gap-2"><span class="text-primary-300">•</span>是否有參考案例或既有系統</li>
+        </ul>
+        <a
+          href={`mailto:${site.email}?subject=${encodeURIComponent('【ORIGI 官網洽詢】專案討論')}&body=${encodeURIComponent('公司／聯絡人：\n專案類型：\n主要需求：\n目標對象：\n預期上線時程：\n預算範圍：\n參考案例：\n\n(來自 ORIGI 官網 Contact 區塊)')}`}
+          class="btn-accent w-full"
+        >
+          寄信給 ORIGI 團隊
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

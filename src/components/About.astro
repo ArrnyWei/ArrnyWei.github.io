@@ -1,0 +1,68 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { site } from '../data/site';
+---
+
+<section id="about" class="section bg-white">
+  <div class="container-content">
+    <SectionHeading
+      eyebrow="About"
+      title="關於歐力吉"
+      description="從電腦 3C 週邊、電子商務到軟體開發，30 年的產業深度讓我們更懂客戶的真實需求。"
+    />
+
+    <div class="grid lg:grid-cols-5 gap-10 lg:gap-16 items-start">
+      <div class="lg:col-span-3 space-y-5 text-ink-700 leading-loose">
+        <p>
+          <strong class="text-ink-900">歐力吉股份有限公司（ORIGI）</strong>成立於 2017 年 9 月，前身為 1992 年成立的昇鼎科技。
+          從電腦 3C 週邊、實體通路、每家比電子購物商城到整合行銷，我們走過完整的產業演進，累積跨產業、跨通路的實務經驗。
+        </p>
+        <p>
+          至今已服務超過 <strong class="text-primary-700">700 家合作企業</strong>、開發超過 <strong class="text-primary-700">70 款 APP</strong>，
+          橫跨政府機關（環保署、林務局、水利署、臺北市政府）、大型企業（台電、台糖、台積電、遠百愛買、合作金庫、萬海航運）、
+          教育單位（台灣大學、政治大學 EMBA、中國文化大學、資策會）與各類品牌客戶。
+        </p>
+        <p>
+          我們以「<strong class="text-ink-900">網站、APP、系統開發</strong>」為三大服務主軸，並於 2015 年完成專案流程 SOP 建置，
+          讓每一個專案從需求訪談、Prototype、開發、上線到維運，都有一致的品質保證。
+        </p>
+      </div>
+
+      <dl class="lg:col-span-2 grid grid-cols-2 gap-4">
+        {site.stats.map((s) => (
+          <div class="relative rounded-sm border border-ink-100 bg-primary-50/60 p-6 overflow-hidden">
+            <div class="absolute top-0 right-0 w-16 h-16 bg-primary-200/40 rounded-full -translate-y-6 translate-x-6"></div>
+            <dt class="relative text-xs tracking-widest uppercase text-ink-500">{s.label}</dt>
+            <dd class="relative mt-2 text-3xl font-bold text-primary-700">{s.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="history" class="section bg-ink-50/60 border-y border-ink-100">
+  <div class="container-content">
+    <SectionHeading
+      eyebrow="History"
+      title="發展沿革"
+      description="30 年一路走來，從 3C 週邊到軟體開發，每一步都是累積。"
+    />
+
+    <ol class="relative max-w-3xl mx-auto">
+      <div class="absolute left-[7.5rem] sm:left-[9rem] top-2 bottom-2 w-px bg-ink-200" aria-hidden="true"></div>
+      {site.history.map((h) => (
+        <li class="relative flex gap-6 sm:gap-8 pb-10 last:pb-0">
+          <div class="w-24 sm:w-32 shrink-0 text-right font-mono text-sm font-semibold text-primary-700 pt-1">
+            {h.year}
+          </div>
+          <div class="relative">
+            <div class="absolute -left-[calc(1.5rem+1px)] sm:-left-[calc(2rem+1px)] top-2 w-3 h-3 rounded-full bg-primary-500 ring-4 ring-white"></div>
+            <h3 class="font-semibold text-ink-900 text-lg">{h.title}</h3>
+            {h.desc && <p class="mt-1 text-sm text-ink-600 leading-relaxed">{h.desc}</p>}
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

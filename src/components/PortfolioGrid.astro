@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import SectionHeading from './SectionHeading.astro';
+import PortfolioCard from './PortfolioCard.astro';
+
+const all = await getCollection('portfolio', ({ data }) => !data.draft);
+const sorted = all.sort((a, b) => {
+  const byFeatured = Number(b.data.featured) - Number(a.data.featured);
+  if (byFeatured !== 0) return byFeatured;
+  const byOrder = (a.data.order ?? 999) - (b.data.order ?? 999);
+  if (byOrder !== 0) return byOrder;
+  return b.data.year - a.data.year;
+});
+const featured = sorted.slice(0, 6);
+---
+
+<section id="portfolio" class="section bg-white">
+  <div class="container-content">
+    <SectionHeading
+      eyebrow="Portfolio"
+      title="作品實績"
+      description="涵蓋政府機關、大型企業、教育與品牌客戶的實際作品，橫跨 APP、電商、系統與官方網站。"
+    />
+
+    {featured.length === 0 ? (
+      <p class="text-center text-ink-400 py-12">作品集整理中，敬請期待。</p>
+    ) : (
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {featured.map((entry) => <PortfolioCard entry={entry} />)}
+      </div>
+    )}
+
+    <div class="mt-12 text-center">
+      <a href="/portfolio/" class="btn-outline">
+        查看全部作品
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+      </a>
+    </div>
+  </div>
+</section>

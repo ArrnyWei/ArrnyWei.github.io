@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import PortfolioCard from '../../components/PortfolioCard.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../../data/site';
+
+const all = await getCollection('portfolio', ({ data }) => !data.draft);
+const sorted = all.sort((a, b) => {
+  const byOrder = (a.data.order ?? 999) - (b.data.order ?? 999);
+  if (byOrder !== 0) return byOrder;
+  return b.data.year - a.data.year;
+});
+
+const categories = ['All', ...Array.from(new Set(sorted.map((e) => e.data.category)))];
+
+const categoryStyles: Record<string, string> = {
+  App: 'bg-accent/15 text-accent-dark',
+  System: 'bg-ink-100 text-ink-700',
+  Web: 'bg-primary-100 text-primary-700',
+  POS: 'bg-amber-100 text-amber-800',
+  Other: 'bg-ink-100 text-ink-600',
+};
+---
+
+<BaseLayout title="作品集" description="歐力吉過往完成的專案作品集。">
+  <section class="section bg-white">
+    <div class="container-content">
+      <SectionHeading
+        eyebrow="Portfolio"
+        title="作品集"
+        description="以下是我們過往完成的部分專案，涵蓋不同產業與類型。"
+      />
+
+      <div class="flex flex-wrap justify-center gap-2 mb-10">
+        {categories.map((c) => (
+          <button
+            type="button"
+            data-filter={c}
+            class="px-4 py-1.5 text-sm border border-primary-200 rounded-sm text-primary-700 hover:border-accent hover:text-accent transition-colors data-[active=true]:bg-primary-900 data-[active=true]:text-white data-[active=true]:border-primary-900"
+            data-active={c === 'All' ? 'true' : 'false'}
+          >
+            {c}
+          </button>
+        ))}
+      </div>
+
+      {sorted.length === 0 ? (
+        <p class="text-center text-primary-500 py-20">作品集整理中，敬請期待。</p>
+      ) : (
+        <div id="portfolio-list" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {sorted.map((entry) => (
+            <div data-category={entry.data.category}>
+              <PortfolioCard entry={entry} />
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="section bg-ink-50/60 border-t border-ink-100">
+    <div class="container-content">
+      <SectionHeading
+        eyebrow="More"
+        title="其他專案"
+        description="以下為受保密協議或版權限制而未公開截圖的專案，涵蓋政府機關、大型企業與自家產品。"
+      />
+
+      <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-5xl mx-auto">
+        {site.otherProjects.map((p) => (
+          <li class="flex items-start gap-3 p-4 bg-white border border-ink-100 rounded-sm hover:border-primary-300 transition-colors">
+            <span class={`shrink-0 text-xs px-2 py-0.5 rounded-sm mt-0.5 ${categoryStyles[p.category] ?? categoryStyles.Other}`}>
+              {p.category}
+            </span>
+            <div class="min-w-0">
+              <div class="font-medium text-ink-900 truncate">{p.name}</div>
+              <div class="text-xs text-ink-500 mt-0.5 truncate">
+                {p.client}{p.note && <span class="text-ink-400">　·　{p.note}</span>}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+    const items = document.querySelectorAll<HTMLElement>('#portfolio-list > [data-category]');
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.filter;
+        buttons.forEach((b) => b.setAttribute('data-active', b === btn ? 'true' : 'false'));
+        items.forEach((el) => {
+          const show = target === 'All' || el.dataset.category === target;
+          el.style.display = show ? '' : 'none';
+        });
+      });
+    });
+  </script>
+</BaseLayout>

@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('portfolio', ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+type Props = { entry: CollectionEntry<'portfolio'> };
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const { data } = entry;
+const cover = data.cover ? (typeof data.cover === 'string' ? data.cover : data.cover.src) : data.coverUrl;
+
+const storeLinks = data.storeLinks ?? {};
+const hasStoreLinks = Boolean(storeLinks.ios || storeLinks.android || storeLinks.web);
+---
+
+<BaseLayout title={data.title} description={data.summary} image={cover}>
+  <article class="bg-white">
+    <header class="bg-ink-50/60 border-b border-ink-100">
+      <div class="container-content py-16 md:py-24">
+        <a href="/portfolio/" class="inline-flex items-center gap-1 text-sm text-ink-500 hover:text-primary-700 mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          返回作品集
+        </a>
+        <div class="flex flex-wrap items-center gap-2 text-xs text-ink-500 mb-4">
+          <span class="px-2 py-0.5 bg-white text-ink-700 rounded-sm border border-ink-200">{data.category}</span>
+          <span>·</span>
+          <span>{data.year}</span>
+          {data.client && <><span>·</span><span>{data.client}</span></>}
+        </div>
+        <h1 class="text-3xl md:text-5xl font-bold text-ink-900 leading-tight">{data.title}</h1>
+        <p class="mt-4 max-w-2xl text-ink-600 leading-relaxed">{data.summary}</p>
+        {data.tags.length > 0 && (
+          <div class="mt-6 flex flex-wrap gap-2">
+            {data.tags.map((t) => (
+              <span class="text-xs px-2 py-1 bg-white border border-ink-200 text-ink-600 rounded-sm">#{t}</span>
+            ))}
+          </div>
+        )}
+
+        {hasStoreLinks && (
+          <div class="mt-8 flex flex-wrap gap-3">
+            {storeLinks.ios && (
+              <a href={storeLinks.ios} target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 bg-ink-900 text-white rounded-sm text-sm hover:bg-ink-700 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-3.08 2.52-4.56 2.64-4.63-1.44-2.1-3.68-2.39-4.48-2.42-1.9-.19-3.71 1.12-4.68 1.12-.98 0-2.46-1.09-4.04-1.06-2.08.03-4 1.21-5.07 3.06-2.17 3.76-.55 9.32 1.55 12.37 1.03 1.5 2.25 3.17 3.85 3.11 1.55-.06 2.14-1 4.01-1 1.86 0 2.39 1 4.03.97 1.66-.03 2.72-1.52 3.74-3.03 1.18-1.73 1.66-3.42 1.68-3.51-.04-.01-3.22-1.23-3.25-4.89zM14.03 2.99c.85-1.03 1.43-2.47 1.27-3.9-1.23.05-2.71.82-3.59 1.85-.79.91-1.49 2.38-1.3 3.78 1.38.11 2.78-.7 3.62-1.73z"/></svg>
+                App Store
+              </a>
+            )}
+            {storeLinks.android && (
+              <a href={storeLinks.android} target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-sm text-sm hover:bg-primary-700 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 15.3414c-.5511 0-.9984-.4456-.9984-.9952 0-.5497.4473-.9968.9984-.9968.5511 0 .9984.4471.9984.9968a.9975.9975 0 01-.9984.9952m-11.046 0c-.5511 0-.9984-.4456-.9984-.9952 0-.5497.4473-.9968.9984-.9968.5511 0 .9984.4471.9984.9968a.9975.9975 0 01-.9984.9952m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.2439 13.8533 7.8508 12 7.8508s-3.5902.3931-5.1367 1.0989L4.841 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"/></svg>
+                Google Play
+              </a>
+            )}
+            {storeLinks.web && (
+              <a href={storeLinks.web} target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-sm text-sm hover:bg-accent-dark transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M3.6 9h16.8M3.6 15h16.8M12 3a15 15 0 000 18M12 3a15 15 0 010 18"/></svg>
+                造訪網站
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+    </header>
+
+    {cover && (
+      <div class="container-content -mt-6 md:-mt-10">
+        <img src={cover} alt={data.title} class="w-full rounded-sm border border-ink-100" />
+      </div>
+    )}
+
+    <div class="container-content py-16 md:py-20">
+      <div class="prose max-w-3xl mx-auto prose-headings:text-ink-900 prose-p:text-ink-700 prose-p:leading-loose prose-li:text-ink-700 prose-a:text-primary-700 prose-strong:text-ink-900">
+        <Content />
+      </div>
+
+      {data.press.length > 0 && (
+        <div class="max-w-3xl mx-auto mt-12 pt-10 border-t border-ink-100">
+          <h3 class="text-sm font-semibold tracking-widest uppercase text-accent mb-4">Press / 相關報導</h3>
+          <ul class="space-y-2">
+            {data.press.map((p) => (
+              <li>
+                <a href={p.url} target="_blank" rel="noopener" class="inline-flex items-start gap-2 text-ink-700 hover:text-primary-700 leading-relaxed">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-1.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                  <span>{p.title}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,50 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'portfolio'>;
+}
+const { entry } = Astro.props;
+const { data, slug } = entry;
+const cover = data.cover ? (typeof data.cover === 'string' ? data.cover : data.cover.src) : data.coverUrl;
+
+const categoryColors: Record<string, string> = {
+  Web: 'bg-primary-100 text-primary-700',
+  App: 'bg-accent/15 text-accent-dark',
+  System: 'bg-ink-100 text-ink-700',
+  POS: 'bg-amber-100 text-amber-800',
+  Other: 'bg-ink-100 text-ink-600',
+};
+---
+
+<a
+  href={`/portfolio/${slug}/`}
+  class="group block bg-white border border-ink-100 rounded-sm overflow-hidden hover:border-primary-400 hover:shadow-lg transition-all"
+>
+  <div class="aspect-[4/3] bg-ink-100 overflow-hidden relative">
+    {cover ? (
+      <img
+        src={cover}
+        alt={data.title}
+        loading="lazy"
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+      />
+    ) : (
+      <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-100 to-primary-200/50 text-primary-700/70 text-lg font-semibold px-6 text-center">
+        {data.title}
+      </div>
+    )}
+  </div>
+  <div class="p-6">
+    <div class="flex flex-wrap items-center gap-2 text-xs text-ink-500 mb-2">
+      <span class={`px-2 py-0.5 rounded-sm ${categoryColors[data.category] ?? categoryColors.Other}`}>{data.category}</span>
+      <span>·</span>
+      <span>{data.year}</span>
+      {data.client && <><span>·</span><span class="truncate">{data.client}</span></>}
+    </div>
+    <h3 class="text-lg font-bold text-ink-900 group-hover:text-primary-700 transition-colors line-clamp-1">
+      {data.title}
+    </h3>
+    <p class="mt-2 text-sm text-ink-600 line-clamp-2 leading-relaxed">{data.summary}</p>
+  </div>
+</a>
