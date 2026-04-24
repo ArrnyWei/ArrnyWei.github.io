@@ -8,7 +8,7 @@ const mapQuery = encodeURIComponent(site.address);
 <section id="contact" class="section bg-ink-900 text-white relative overflow-hidden">
   <div class="absolute inset-0 pointer-events-none">
     <div class="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-primary-500/10 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-accent/10 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-cream-200/10 blur-3xl"></div>
   </div>
 
   <div class="container-content relative">
@@ -60,7 +60,7 @@ const mapQuery = encodeURIComponent(site.address);
               href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`}
               target="_blank"
               rel="noopener"
-              class="mt-2 inline-flex items-center gap-1 text-sm text-accent-light hover:text-white"
+              class="mt-2 inline-flex items-center gap-1 text-sm text-primary-300 hover:text-white"
             >
               於 Google 地圖開啟
               <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
@@ -83,7 +83,7 @@ const mapQuery = encodeURIComponent(site.address);
         </ul>
         <a
           href={`mailto:${site.email}?subject=${encodeURIComponent('【ORIGI 官網洽詢】專案討論')}&body=${encodeURIComponent('公司／聯絡人：\n專案類型：\n主要需求：\n目標對象：\n預期上線時程：\n預算範圍：\n參考案例：\n\n(來自 ORIGI 官網 Contact 區塊)')}`}
-          class="btn-accent w-full"
+          class="btn-primary w-full"
         >
           寄信給 ORIGI 團隊
         </a>

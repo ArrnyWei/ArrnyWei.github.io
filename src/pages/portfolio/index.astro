@@ -15,7 +15,7 @@ const sorted = all.sort((a, b) => {
 const categories = ['All', ...Array.from(new Set(sorted.map((e) => e.data.category)))];
 
 const categoryStyles: Record<string, string> = {
-  App: 'bg-accent/15 text-accent-dark',
+  App: 'bg-primary-100 text-primary-800',
   System: 'bg-ink-100 text-ink-700',
   Web: 'bg-primary-100 text-primary-700',
   POS: 'bg-amber-100 text-amber-800',
@@ -37,7 +37,7 @@ const categoryStyles: Record<string, string> = {
           <button
             type="button"
             data-filter={c}
-            class="px-4 py-1.5 text-sm border border-primary-200 rounded-sm text-primary-700 hover:border-accent hover:text-accent transition-colors data-[active=true]:bg-primary-900 data-[active=true]:text-white data-[active=true]:border-primary-900"
+            class="px-4 py-1.5 text-sm border border-ink-200 rounded-sm text-ink-700 hover:border-primary-500 hover:text-primary-700 transition-colors data-[active=true]:bg-primary-700 data-[active=true]:text-white data-[active=true]:border-primary-700"
             data-active={c === 'All' ? 'true' : 'false'}
           >
             {c}
